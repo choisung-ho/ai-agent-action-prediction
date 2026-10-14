@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.env*
+data/
+model/
+model_candidate*/
+*.pkl
+*.joblib
+*.pt
+*.bin
+*.zip
+output/

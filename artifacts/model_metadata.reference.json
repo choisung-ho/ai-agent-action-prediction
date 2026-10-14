@@ -1,0 +1,110 @@
+{
+  "best_experiment": "AE_strict_nested_E5_teacher_distilled_noE5_geometric_fallback_plus_char20_terminal_prompt_overlay",
+  "best_macro_f1": 0.761433,
+  "validation_method": "strict nested GroupKFold teacher cross-fitting plus independent common fixed validation for portable no-E5 GRU; geometric raw-XGB/GRU blend uses sim=0.20 XGB and au=0.85 XGB; char20 terminal rule was independently rebuilt within every session fold and exact future-history labels override all learned fallback",
+  "feature_builder": "stacked_xgb_user_source_v1",
+  "model_type": "stacked_xgb_user_source_v1",
+  "refit_full": true,
+  "selector_feature_count": 2032,
+  "all_classes": [
+    "read_file",
+    "grep_search",
+    "list_directory",
+    "glob_pattern",
+    "edit_file",
+    "write_file",
+    "apply_patch",
+    "run_bash",
+    "run_tests",
+    "lint_or_typecheck",
+    "ask_user",
+    "plan_task",
+    "web_search",
+    "respond_only"
+  ],
+  "sequence_fusion_noe5": {
+    "xgb_weight": 0.2,
+    "source_xgb_weights": {
+      "sim": 0.2,
+      "au": 0.85
+    },
+    "blend_mode": "geometric",
+    "gru_weight": 0.8,
+    "xgb_probability": "raw pre-source-calibration selector probability",
+    "gate": "only not exact future-history recovered rows",
+    "numpy_equivalence_max_abs_probability_difference": 0.000417560338973999,
+    "validation_evidence": {
+      "student_training": {
+        "full_refit": "12 epochs on all rows; global rich-GRU GroupKFold OOF soft targets used only during training",
+        "inference_contract": "portable no-E5 NumPy GRU; no teacher probabilities or E5 embeddings at inference"
+      },
+      "strict_nested_outer_group_oof": {
+        "protocol": "5 outer session folds; each student-train soft target is produced by a 4-fold E5 teacher fit wholly inside that outer train partition",
+        "student_macro_f1": 0.7451906473458106,
+        "student_terminal_macro_f1": 0.687240838090634,
+        "conservative_geometric_raw_xgb_student": {
+          "xgb_weight_sim": 0.2,
+          "xgb_weight_au": 0.85,
+          "all_macro_f1": 0.761433,
+          "terminal_macro_f1": 0.732635
+        },
+        "legacy_geometric_terminal_nested_macro_f1": 0.730854
+      },
+      "strict_common_fixed_validation": {
+        "teacher_contract": "teacher soft targets for common-train are 5-fold cross-fitted within common-train only; fixed validation was excluded",
+        "student_distill_weight": 0.35,
+        "student_terminal_macro_f1": 0.6570994821172196,
+        "conservative_geometric_raw_xgb_student_terminal_macro_f1": 0.7050834167481022,
+        "legacy_geometric_terminal_macro_f1": 0.7050166649381818,
+        "note": "The conservative sim=0.20/au=0.85 gate was selected because sim=0.25, although stronger on nested OOF, fell to 0.703788 on this independent fixed split."
+      }
+    }
+  },
+  "terminal_prompt_char_rule": {
+    "version": "terminal_prompt_char_rule_v1",
+    "training_scope": "all 70,000 train rows; one count per feature per row",
+    "rule_policy": "casefold Unicode word tokens; replace digit runs with <n>; pad each token with ^/$; emit internal char 3/4/5-grams; retain support>=20 and exactly one observed label; inference requires every fired retained rule to agree",
+    "support": 20,
+    "n_rules": 200,
+    "serialized_json_bytes": 5977,
+    "batch_test": {
+      "rows": 5,
+      "session_max_rows": 5,
+      "rule_fired_all": 0,
+      "rule_fired_session_max": 0,
+      "predicted_label_counts_session_max": {}
+    },
+    "evaluation": {
+      "full_group_oof_terminal_macro_f1": 0.733523,
+      "full_group_oof_delta_vs_geometric": 0.002248,
+      "full_group_oof_fixed_harmed": [
+        9,
+        1
+      ],
+      "fixed_terminal_macro_f1": 0.70805,
+      "fixed_delta_vs_geometric": 0.003033,
+      "fixed_fixed_harmed": [
+        1,
+        0
+      ]
+    },
+    "deployment_gate": "Only if future-history recovery did not deterministically reveal an action AND the sample is the maximum supplied step of its session. Do not add a confidence gate or source/context rule."
+  },
+  "joint_deployment_validation": {
+    "protocol": "The char20 outer-fold predictions were aligned with the strict nested-distillation outer-fold assignment; fixed char20 predictions were aligned by validation ID before applying the same terminal-only gate.",
+    "strict_nested_group_oof": {
+      "geometric_terminal_macro_f1_before_char20": 0.7326349123352226,
+      "geometric_terminal_macro_f1_with_char20": 0.7348698142242434,
+      "terminal_delta": 0.0022349018890207573,
+      "hybrid_macro_f1_before_char20": 0.9831918407834532,
+      "hybrid_macro_f1_with_char20": 0.9833452053007227,
+      "char20_fixes_harms": [9, 1]
+    },
+    "independent_common_fixed_validation": {
+      "geometric_terminal_macro_f1_before_char20": 0.7050834167481022,
+      "geometric_terminal_macro_f1_with_char20": 0.7081136249999853,
+      "terminal_delta": 0.0030302082518831597,
+      "char20_fixes_harms": [1, 0]
+    }
+  }
+}

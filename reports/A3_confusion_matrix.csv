@@ -1,0 +1,15 @@
+actual\predicted,read_file,grep_search,list_directory,glob_pattern,edit_file,write_file,apply_patch,run_bash,run_tests,lint_or_typecheck,ask_user,plan_task,web_search,respond_only
+read_file,538,514,346,376,3,0,2,7,3,8,4,1,3,0
+grep_search,693,671,403,486,9,0,1,7,5,5,6,0,2,0
+list_directory,241,249,180,144,3,0,3,2,0,1,1,0,2,0
+glob_pattern,420,407,223,276,3,0,4,2,2,1,2,0,1,0
+edit_file,3,4,1,3,1699,2,621,0,1,2,1,1,1,0
+write_file,1,0,2,0,2,291,0,0,0,0,0,0,0,0
+apply_patch,3,3,1,0,1073,1,390,0,3,1,0,1,0,0
+run_bash,6,1,0,2,4,0,0,410,398,209,1,0,0,0
+run_tests,1,2,1,3,2,0,0,434,426,238,0,0,0,1
+lint_or_typecheck,1,0,1,3,0,0,0,257,253,140,0,0,1,0
+ask_user,1,1,0,2,5,0,0,0,0,0,236,180,116,0
+plan_task,0,3,1,0,0,0,0,0,1,0,224,208,99,0
+web_search,0,0,0,0,0,1,0,0,0,0,103,118,65,0
+respond_only,0,0,0,0,0,0,0,0,0,0,0,0,0,491

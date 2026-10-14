@@ -1,0 +1,5 @@
+experiment,macro_f1,train_seconds,n_train,n_val,history_n,include_meta,artifact
+B0,0.5072465038762085,6.285,54979,15021,1,False,../experiments/modeling_b/B0.pkl
+B1,0.5261022863362945,10.855,54979,15021,3,False,../experiments/modeling_b/B1.pkl
+B2,0.485692885221874,14.098,54979,15021,5,False,../experiments/modeling_b/B2.pkl
+B3,0.5420142772699246,17.403,54979,15021,3,True,../experiments/modeling_b/B3.pkl
